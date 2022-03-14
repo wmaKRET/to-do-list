@@ -1,12 +1,12 @@
-const toDoAlert = document.querySelector('.todolist__header-title');
-const toDoInput = document.querySelector('.todo-input');
-const toDoTasksLeft = document.querySelector('.todolist__header-remaining');
-const listContainer = document.querySelector('.todolist__container');
-const newTaskForm = document.querySelector('[data-new-task]');
+const tasksAlert = document.querySelector('.todolist__header-title');
+const tasksForm = document.querySelector('[data-new-task]');
+const tasksInput = document.querySelector('.todo-input');
+const tasksRemaining = document.querySelector('.todolist__header-remaining');
+const tasksContainer = document.querySelector('.todolist__container');
 // --- aside buttons --- //
-const addTaskBtn = document.querySelector('#add');
-const clearCompletedBtn = document.querySelector('#confirm');
-const clearAllBtn = document.querySelector('#clear');
+const taskAddBtn = document.querySelector('#add');
+const taskClearCompletedBtn = document.querySelector('#confirm');
+const taskClearAllBtn = document.querySelector('#clear');
 
 // --- functions --- //
 function createTask(name) {
@@ -15,9 +15,9 @@ function createTask(name) {
 
 function addTask(e) {
     e.preventDefault();
-    const task = createTask(toDoInput.value);
+    const task = createTask(tasksInput.value);
     if (task.name == null || task.name === '') {
-        displayAlert('Please enter value', 'failure');
+        displayAlert('please enter value', 'failure');
         return;
     }
     const taskElem = document.createElement('li');
@@ -29,32 +29,31 @@ function addTask(e) {
         `<span class="item-text">${task.name}</span><span class="item-close">X</span>`;
     const deleteBtn = taskElem.querySelector('.item-close');
     deleteBtn.addEventListener('click', deleteTask);
-    listContainer.appendChild(taskElem);
-    toDoInput.value = '';
-    displayAlert(`added: ${task.name}`, 'success');
+    tasksContainer.appendChild(taskElem);
+    tasksInput.value = '';
+    displayAlert(`${task.name}`, 'success');
     addToLocalStorage(task);
-    taskCount();
+    taskRemain();
 }
 
 function deleteTask(e){
     const taskElem = e.currentTarget.parentElement; 
-    const taskID = taskElem.dataset.id;
-    listContainer.removeChild(taskElem);    
-    displayAlert(`removed: ${taskElem.firstChild.innerText}`, 'failure');
-    removeFromLocalStorage(taskID);
-    taskCount();
+    tasksContainer.removeChild(taskElem);   
+    displayAlert(`${taskElem.firstChild.innerText}`, 'failure');
+    removeFromLocalStorage(taskElem.dataset.id);
+    taskRemain();
 }
 
 function deleteAll(){
     const tasks = document.querySelectorAll('.todolist__container-item');
     if (tasks.length > 0) {
         tasks.forEach(task => {
-            listContainer.removeChild(task);
+            tasksContainer.removeChild(task);
         });
-        displayAlert('all tasks removed', 'failure');
+        displayAlert('all tasks deleted', 'alert');
         localStorage.removeItem('todo-list');
-        taskCount();
-    } else displayAlert('no tasks to remove', 'failure');
+        taskRemain();
+    } else displayAlert('there are no tasks to delete', 'failure');
 }
 
 function deleteCompleted(){
@@ -62,28 +61,28 @@ function deleteCompleted(){
     const tasksCompleted = [...tasks].filter(task => task.classList.contains('completed'))
     if (tasksCompleted.length > 0){
         tasksCompleted.forEach(task => {
+            tasksContainer.removeChild(task);
             removeFromLocalStorage(task.dataset.id);
-            listContainer.removeChild(task);
         })
-        displayAlert('completed tasks removed', 'failure');
-    } else displayAlert('no completed tasks to remove', 'failure');
+        displayAlert('completed tasks deleted', 'alert');
+    } else displayAlert('there are no completed tasks to delete', 'failure');
 }
 
-function taskCount(){
+function taskRemain(){
     const tasks = document.querySelectorAll('.todolist__container-item');
     const incompleteTasks = [...tasks].filter(task => !task.classList.contains('completed')).length;
     const taskText = incompleteTasks === 1
         ? 'task'
         : 'tasks';
-    toDoTasksLeft.innerText = `${incompleteTasks} ${taskText} remaining`;
+    tasksRemaining.innerText = `${incompleteTasks} ${taskText} remaining`;
 }
 
 function displayAlert(text, action){
-    toDoAlert.textContent = text;
-    toDoAlert.classList.add(action);
+    tasksAlert.textContent = text;
+    tasksAlert.classList.add(action);
     setTimeout(() => {
-        toDoAlert.textContent = 'to-do list';
-        toDoAlert.classList.remove(action);
+        tasksAlert.textContent = 'to-do list';
+        tasksAlert.classList.remove(action);
     }, 1500);
 }
 
@@ -129,7 +128,7 @@ function setupTasks(){
             renderTasks(task.id, task.name, task.complete);
         });
     }
-    taskCount();
+    taskRemain();
 }
 
 function renderTasks(id, name, complete) {
@@ -143,18 +142,18 @@ function renderTasks(id, name, complete) {
         `<span class="item-text">${name}</span><span class="item-close">X</span>`;
     const deleteBtn = taskElem.querySelector('.item-close');
     deleteBtn.addEventListener('click', deleteTask);
-    listContainer.appendChild(taskElem);
+    tasksContainer.appendChild(taskElem);
 }
 
 // --- event listeners --- //
-addTaskBtn.addEventListener('click', addTask);
-newTaskForm.addEventListener('submit', addTask);
-clearCompletedBtn.addEventListener('click', deleteCompleted);
-clearAllBtn.addEventListener('click', deleteAll);
-
 window.addEventListener("DOMContentLoaded", setupTasks);
 
-listContainer.addEventListener('click', e => {
+taskAddBtn.addEventListener('click', addTask);
+tasksForm.addEventListener('submit', addTask);
+taskClearCompletedBtn.addEventListener('click', deleteCompleted);
+taskClearAllBtn.addEventListener('click', deleteAll);
+
+tasksContainer.addEventListener('click', e => {
     if (e.target.tagName.toLowerCase() === 'li') {
         e.target.classList.toggle('completed');
         editLocalStorage(e.target.dataset.id);
@@ -163,5 +162,5 @@ listContainer.addEventListener('click', e => {
         e.target.parentElement.classList.toggle('completed');
         editLocalStorage(e.target.parentElement.dataset.id);
     }
-    taskCount();
+    taskRemain();
 });

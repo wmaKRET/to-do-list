@@ -2,15 +2,16 @@
 $background: darkgrey;
 $background2: grey;
 $content: orange;
-//$content2: rgb(165, 107, 0);
 $white: white;
 $black: black;
 $green: rgb(102, 233, 102);
-$red: rgb(255, 116, 116);
+$red: rgb(223, 122, 122);
+$blue: rgb(103, 225, 255);
 // FONTS
-$font-sm: 0.75rem;
+$font-std: 1rem;
 $font-md: 1.25rem;
 $font-lg: 1.5rem;
+$font-vlg: 2rem;
 
 *, *::before, *::after {
     box-sizing: border-box;
@@ -51,20 +52,13 @@ a {
 
 .main {
     padding: 2em 1em;
-    display: grid;
-    grid-template-columns: 1fr 2fr;
 
     .menu {
-        display: flex;
-        flex-direction: column;
-        margin-top: 5em;
-        align-items: center;
         text-align: center;
 
         &-item {
-            width: 100px;
             margin: 0.5em 0;
-            padding: 0.5em 0;
+            padding: 0.5em 0.5em;
             border: 2px solid $background;
             border-radius: 10px;
             color: $content;               
@@ -83,16 +77,14 @@ a {
         align-items: center;
 
         &__header {
-            width: 80%;
 
             &-title {
                 margin: 0.5em 0;
-                padding: 0.5em 0;
+                padding: 0.5em 0.5em;
                 text-align: center;
                 background-color: $background; 
                 border: 2px solid $background;
-                border-radius: 10px;
-                font-size: $font-lg;    
+                border-radius: 10px;  
                 font-weight: 500;
                 color: $white;
 
@@ -109,24 +101,31 @@ a {
                     border-radius: 10px;
                     color: $red;
                 }
+                &.alert {
+                    background-color: $background2;
+                    border: 2px solid $blue;
+                    border-radius: 10px;
+                    color: $blue;
+                }
             }
 
             &-input {
                 display: flex;
-                height: 2em;
                 margin: 0.5em 0;
-                padding-left: 1em;
                 justify-content: left;
                 align-items: center;                
                 border: 2px solid $background;
                 border-radius: 10px;
                 color: $content; 
 
+                form {
+                    width: 100%;
+                }
+
                 .todo-input {
                     width: 95%;
                     background-color: $background2;
                     border: none;
-                    font-size: large;
                     color: $white;
 
                     transition: all 0.1s ease-in-out;
@@ -134,20 +133,6 @@ a {
                         outline: none;
                         color: $content;
                     }
-                }
-
-                transition: all 0.2s ease-in-out;
-                &.success {
-                    background-color: $background2;
-                    border: 2px solid $green;
-                    border-radius: 10px;
-                    color: $green;
-                }
-                &.failure {
-                    background-color: $background2;
-                    border: 2px solid $red;
-                    border-radius: 10px;
-                    color: $red;
                 }
             }
 
@@ -158,7 +143,6 @@ a {
         }
 
         &__container {
-            width: 80%;
             padding-left: 0;
 
             &-item {
@@ -170,6 +154,7 @@ a {
                 align-items: center;
                 border: 2px solid $background;
                 border-radius: 10px;
+                color: $content;
                 cursor: pointer;
 
                 .item-close {
@@ -185,6 +170,7 @@ a {
                     }
                 }
 
+                transition: all 0.2s ease-in-out;
                 &.completed {
                     border: 2px solid $content;
                     border-radius: 10px;
@@ -204,6 +190,19 @@ a {
                         }
                     }
                 }
+
+                &:hover {
+                    background-color: $background;
+                    color: $white;
+
+                    .item-close {
+                        color: $background2;
+
+                        &:hover {
+                            color: $red;
+                        }
+                    }
+                }
             }
         }
     }
@@ -220,5 +219,108 @@ a {
     &-item {
         margin-bottom: 0.5rem;
         color: $white;
+    }
+}
+
+@media screen and (max-width: 450px) {
+    .main {
+        display: grid;
+        grid-template-columns: 1fr;
+    
+        .menu {
+            display: grid; 
+            grid-template-columns: 1fr 1fr;
+                            
+            &-item {
+                display: grid;
+                width: auto;
+                align-items: center;
+                font-size: $font-md;
+
+                &:first-child {
+                    grid-column: span 2;
+                    font-size: $font-vlg;
+                }
+
+                &:nth-child(2) {
+                    margin-right: 0.25em;
+                }
+
+                &:nth-child(3) {
+                    margin-left: 0.25em;
+                }
+            }
+        }
+        
+        .todolist {
+    
+            &__header {
+                width: 100%;
+    
+                &-title {
+                    font-size: $font-vlg;    
+                }
+    
+                &-input {
+                    height: 3em;      
+                    padding-left: 0.5em;
+                    font-size: $font-lg;  
+
+                    .todo-input {
+                        font-size: $font-lg;
+                    }
+                }
+                &-remaining {
+                    font-size: $font-md;
+                }
+            }
+    
+            &__container-item {
+                font-size: $font-lg;
+            }
+        }
+    }
+}
+
+@media screen and (min-width: 451px) {
+    .main {
+        display: grid;
+        grid-template-columns: 1fr 2fr;
+    
+        .menu {
+            display: flex;
+            flex-direction: column;
+            margin-top: 5em;
+            align-items: center;
+    
+            &-item {
+                width: 100px;
+            }
+        }
+        
+        .todolist {
+    
+            &__header {
+                width: 80%;
+
+                &-title {
+                    font-size: $font-md;    
+                }
+    
+                &-input {
+                    height: 2em;
+                    padding-left: 1em;
+                    font-size: $font-md;
+
+                    .todo-input {
+                        font-size: $font-std;
+                    }
+                }
+            }
+    
+            &__container {
+                width: 80%;
+            }
+        }
     }
 }
