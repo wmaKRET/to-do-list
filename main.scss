@@ -1,0 +1,224 @@
+// COLORS
+$background: darkgrey;
+$background2: grey;
+$content: orange;
+//$content2: rgb(165, 107, 0);
+$white: white;
+$black: black;
+$green: rgb(102, 233, 102);
+$red: rgb(255, 116, 116);
+// FONTS
+$font-sm: 0.75rem;
+$font-md: 1.25rem;
+$font-lg: 1.5rem;
+
+*, *::before, *::after {
+    box-sizing: border-box;
+}
+
+body {
+    display: grid;
+    grid-template-columns: 1fr;
+    margin: 0;
+    padding: 0;
+    background-color: $background2;
+    font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+}
+
+a {
+    text-decoration: none;
+    color: $content;
+}
+
+.navbar {
+    display: flex;
+    padding: 0.5em 2em;
+    justify-content: space-between;
+    font-size: $font-md;
+    font-weight: 500;
+
+    &-item {
+        border-bottom: solid $background2;
+        border-radius: 2px;
+
+        transition: all 0.2s ease-in-out;
+        &:hover {
+            color: $white;
+            border-color: $background;
+        }
+    }
+}
+
+.main {
+    padding: 2em 1em;
+    display: grid;
+    grid-template-columns: 1fr 2fr;
+
+    .menu {
+        display: flex;
+        flex-direction: column;
+        margin-top: 5em;
+        align-items: center;
+        text-align: center;
+
+        &-item {
+            width: 100px;
+            margin: 0.5em 0;
+            padding: 0.5em 0;
+            border: 2px solid $background;
+            border-radius: 10px;
+            color: $content;               
+            cursor: pointer;
+
+            transition: all 0.2s ease-in-out;
+            &:hover {
+                color: $white;
+                background-color: $background;
+            }
+        }
+    }
+    
+    .todolist {
+        justify-content: center;
+        align-items: center;
+
+        &__header {
+            width: 80%;
+
+            &-title {
+                margin: 0.5em 0;
+                padding: 0.5em 0;
+                text-align: center;
+                background-color: $background; 
+                border: 2px solid $background;
+                border-radius: 10px;
+                font-size: $font-lg;    
+                font-weight: 500;
+                color: $white;
+
+                transition: all 0.2s ease-in-out;
+                &.success {
+                    background-color: $background2;
+                    border: 2px solid $green;
+                    border-radius: 10px;
+                    color: $green;
+                }
+                &.failure {
+                    background-color: $background2;
+                    border: 2px solid $red;
+                    border-radius: 10px;
+                    color: $red;
+                }
+            }
+
+            &-input {
+                display: flex;
+                height: 2em;
+                margin: 0.5em 0;
+                padding-left: 1em;
+                justify-content: left;
+                align-items: center;                
+                border: 2px solid $background;
+                border-radius: 10px;
+                color: $content; 
+
+                .todo-input {
+                    width: 95%;
+                    background-color: $background2;
+                    border: none;
+                    font-size: large;
+                    color: $white;
+
+                    transition: all 0.1s ease-in-out;
+                    &:focus {
+                        outline: none;
+                        color: $content;
+                    }
+                }
+
+                transition: all 0.2s ease-in-out;
+                &.success {
+                    background-color: $background2;
+                    border: 2px solid $green;
+                    border-radius: 10px;
+                    color: $green;
+                }
+                &.failure {
+                    background-color: $background2;
+                    border: 2px solid $red;
+                    border-radius: 10px;
+                    color: $red;
+                }
+            }
+
+            &-remaining {
+                text-align: center;
+                color: $background;
+            }
+        }
+
+        &__container {
+            width: 80%;
+            padding-left: 0;
+
+            &-item {
+                display: grid;
+                grid-template-columns: 1fr 2em 0.1em;
+                margin: 0.5em 0;
+                padding: 0.5em 1em;
+                justify-content: left;
+                align-items: center;
+                border: 2px solid $background;
+                border-radius: 10px;
+                cursor: pointer;
+
+                .item-close {
+                    padding: 0.5em 0.75em;
+                    border-radius: 10px;
+                    color: $background;
+
+                    transition: all 0.1s ease-in-out;
+                    &:hover {
+                        background-color: $black;
+                        opacity: 0.25;
+                        border-radius: 20px;
+                    }
+                }
+
+                &.completed {
+                    border: 2px solid $content;
+                    border-radius: 10px;
+                    opacity: 0.5;
+
+                    .item-text {
+                        position: relative;
+
+                        &::after {
+                            content: "";
+                            position: absolute;
+                            left: 0;
+                            right: 0.5em;
+                            bottom: 40%;
+                            height: 2px;
+                            background-color: $content;
+                        }
+                    }
+                }
+            }
+        }
+    }
+}
+
+.footer {
+    position: fixed;
+    bottom: 0px;
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    background: linear-gradient(to bottom, transparent, $background2);
+
+    &-item {
+        margin-bottom: 0.5rem;
+        color: $white;
+    }
+}

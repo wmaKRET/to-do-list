@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>to-do list</title>
+    <link rel="stylesheet" href="main.css">
+</head>
+<body>
+    <header>
+        <nav class="navbar">
+                <a href="#home" class="navbar-item">to-do list</a>
+                <a href="https://github.com/wmaKRET" target="_blank" class="navbar-item">GitHub</a>
+        </nav>
+    </header>
+
+    <main class="main">
+        <aside class="menu">
+            <div class="menu-item" id="add">add task</div>
+            <div class="menu-item" id="confirm">delete completed</div>
+            <div class="menu-item" id="clear">delete all</div>
+        </aside>
+        <section class="todolist">
+            <div class="todolist__header">
+                <div class="todolist__header-title">to-do list</div>
+                <div class="todolist__header-input">
+                    <form action="" data-new-task>
+                        <input class="todo-input" type="text" placeholder="type here...">
+                    </form>
+                </div>
+                <div class="todolist__header-remaining">0 tasks remaining</div>
+            </div>
+            <ul class="todolist__container">
+                <li class="todolist__container-item">
+                    <span class="item-text">clean room</span><span class="item-close">X</span>
+                </li>
+                <li class="todolist__container-item">
+                    <span class="item-text">wash dishes</span><span class="item-close">X</span>
+                </li>
+                <li class="todolist__container-item confirmed">
+                    <span class="item-text">do laundry</span><span class="item-close">X</span>
+                </li>
+            </ul>
+        </section>
+    </main>
+    <footer class="footer">
+            <p class="footer-item">wmaKRET</p>
+    </footer>
+    <script src="main.js"></script>
+</body>
+</html>
